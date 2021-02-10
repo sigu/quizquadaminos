@@ -44,6 +44,10 @@ COPY --from=app_builder /opt/release/_build .
 RUN chown -R app: ./prod
 USER app
 
+# CMD ["./prod/rel/quadquizaminos/bin/quadquizaminos", "stop"]
+CMD ["./prod/rel/quadquizaminos/bin/quadquizaminos", "eval", "Quadquizaminos.ReleaseTask.migrate"]
 CMD ["./prod/rel/quadquizaminos/bin/quadquizaminos", "start"]
+
+
 
 
