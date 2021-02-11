@@ -41,12 +41,15 @@ RUN apt-get update && apt-get install -y openssl
 RUN useradd --create-home app
 WORKDIR /home/app
 COPY --from=app_builder /opt/release/_build .
+COPY entrypoint.sh .
+RUN chmod a+x ./entrypoint.sh
 RUN chown -R app: ./prod
 USER app
 
-# CMD ["./prod/rel/quadquizaminos/bin/quadquizaminos", "stop"]
-CMD ["./prod/rel/quadquizaminos/bin/quadquizaminos", "eval", "Quadquizaminos.ReleaseTask.migrate"]
-CMD ["./prod/rel/quadquizaminos/bin/quadquizaminos", "start"]
+
+
+
+CMD ["./entrypoint.sh"]
 
 
 
