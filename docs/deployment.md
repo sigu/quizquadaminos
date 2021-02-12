@@ -9,7 +9,7 @@ The docker image is automatically tagged with the application version from your 
 - You will need the necessary permissions to create an instance
 - Docker should be installed in your computer and running
 - GCloud should be well set up, authenticated and initialised to use docker
-- access to production secrets in the `prod.secrets.exs` file (look at `config/prod.sample.exs` to see an example)
+- access to production secrets in the `releases.exs` file (look at `config/releases.sample.exs` to see an example)
 
 
 #### creating an image for use in your laptop

@@ -70,8 +70,8 @@ release: ## Build a release of the application with MIX_ENV=prod
 	MIX_ENV=prod mix release
 
 .PHONY: docker-image
-docker-image:
-	docker build . -t quadquiz:$(APP_VERSION) --no-cache
+docker-image: ## builds docker image
+	sudo docker build . -t quadquiz:$(APP_VERSION) --no-cache
 
 .PHONY: push-image-gcp push-and-serve deploy-existing-image
 push-image-gcp: ## push image to gcp
@@ -84,9 +84,11 @@ push-image-gcp: ## push image to gcp
 	gcloud container images delete gcr.io/twinklymaha/quadquiz:$(APP_VERSION) --force-delete-tags  || echo "no image to delete on the remote"
 	docker push gcr.io/twinklymaha/quadquiz:$(APP_VERSION)
 
-push-and-serve-gcp: push-image-gcp deploy-existing-image
+.PHONY: push-image-gcp deploy-existing-image 
+push-and-serve-gcp: ## creates docker image then push to gcp and launches an instance with the image
 
-deploy-existing-image:
+.PHONY: deploy-existing-image
+deploy-existing-image: ## creates an instance using existing gcp docker image
 	gcloud compute instances create-with-container $(instance-name) \
 		--container-image=gcr.io/twinklymaha/quadquiz:$(DOCKER_IMAGE_TAG) \
 		--machine-type=e2-micro \
@@ -97,5 +99,5 @@ deploy-existing-image:
 		--labels=project=quadquiz
 
 .PHONY: update-instance
-update-instance:
+update-instance: ## updates image of a running instance
 	gcloud compute instances update-container $(instance-name) --container-image gcr.io/twinklymaha/quadquiz:$(image-tag)
