@@ -70,8 +70,8 @@ release: ## Build a release of the application with MIX_ENV=prod
 	MIX_ENV=prod mix release
 
 .PHONY: docker-image
-docker-image: ## builds docker image
-	sudo docker build . -t quadquiz:$(APP_VERSION) --no-cache
+docker-image: #builds docker image
+	docker build . -t quadquiz:$(APP_VERSION) 
 
 .PHONY: push-image-gcp push-and-serve deploy-existing-image
 push-image-gcp: ## push image to gcp
